@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/industry-e5a46917-796a-4bd4-950f-c827d8e20d29/styles.css">
+<script src="_ds/industry-e5a46917-796a-4bd4-950f-c827d8e20d29/_ds_bundle.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  body { margin: 0; background: #FAFAFB; color: #101010; font-family: Pretendard, sans-serif; letter-spacing: -0.02em; }
+  a { color: #A60035; text-decoration: none; }
+  a:hover { color: #FA0050; }
+  @keyframes sweepLine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  @keyframes runLine {
+    0% { width: 0; opacity: 1; }
+    52% { width: 100%; opacity: 1; }
+    86% { width: 100%; opacity: 1; }
+    100% { width: 100%; opacity: 0; }
+  }
+  @keyframes runReceipt {
+    0% { left: 0; opacity: 0; transform: translate(-50%, -50%) rotate(-6deg); }
+    8% { opacity: 1; }
+    52% { left: 100%; transform: translate(-50%, -50%) rotate(0deg); }
+    62% { transform: translate(-50%, -62%) rotate(0deg); }
+    72% { transform: translate(-50%, -50%) rotate(0deg); }
+    86% { left: 100%; opacity: 1; }
+    100% { left: 100%; opacity: 0; }
+  }
+</style>
+</helmet>
+
+<div style="width:1440px;margin:0 auto">
+
+  <section style="position:relative;min-height:940px;padding:96px 96px 80px;display:flex;flex-direction:column;justify-content:center;gap:44px;background:#FA0050;color:#FFFFFF;overflow:hidden">
+    <div style="position:absolute;top:0;left:0;right:0;height:3px;background:rgba(255,255,255,.22);overflow:hidden">
+      <div style="width:34%;height:100%;background:linear-gradient(90deg,rgba(255,255,255,0),#FFFFFF 45%,#FFFFFF 55%,rgba(255,255,255,0));animation:sweepLine 3.2s cubic-bezier(.5,0,.5,1) infinite"></div>
+    </div>
+    <div style="font-size:20px;font-weight:800;letter-spacing:-0.02em">출장비 어디로 넣어드릴까요?</div>
+    <div style="font-family:Pretendard,sans-serif;font-weight:900;font-size:132px;line-height:0.94;letter-spacing:-0.06em">여비요</div>
+    <div style="position:relative;width:calc(100% + 192px);margin-left:-96px;margin-right:-96px;height:26px;margin-top:-18px">
+      <div style="position:absolute;top:50%;left:0;right:0;height:2px;background:rgba(255,255,255,.28)"></div>
+      <div style="position:absolute;top:50%;left:0;height:2px;background:#FFFFFF;animation:runLine 6.5s cubic-bezier(.55,0,.35,1) infinite"></div>
+      <div style="position:absolute;top:50%;left:0;width:88px;height:71px;filter:invert(1);mix-blend-mode:screen;animation:runReceipt 6.5s cubic-bezier(.55,0,.35,1) infinite">
+        <img src="scooter.png" alt="배달 오토바이" style="width:88px;height:71px;display:block">
+      </div>
+    </div>
+    <div style="font-size:44px;font-weight:900;line-height:1.35;letter-spacing:-0.04em;max-width:900px;text-wrap:pretty">잡무에 시달리는 서무들이여!<br>여비요로 오라</div>
+    <div style="display:flex;align-items:center;gap:16px;margin-top:12px">
+      <a href="여비요 팀버전.dc.html" target="_blank" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:0 28px;border-radius:999px;background:#101010;color:#FFFFFF;font-size:17px;font-weight:800" style-hover="background:#2A2A2A"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>팀 버전</a>
+      <a href="여비요 개인버전.dc.html" target="_blank" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:0 28px;border:1px solid rgba(255,255,255,.55);border-radius:999px;color:#FFFFFF;font-size:17px;font-weight:800" style-hover="background:rgba(255,255,255,.14)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>개인 버전</a>
+      <button type="button" onClick="{{ onToggleSound }}" style="display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 24px;border:1px solid rgba(255,255,255,.55);border-radius:999px;background:transparent;color:#FFFFFF;font:inherit;font-size:16px;font-weight:800;cursor:pointer" style-hover="background:rgba(255,255,255,.14)">{{ soundLabel }}</button>
+      <span style="font-size:16px;font-weight:700;opacity:.9">출장승인 엑셀 한 장이면 정산이 끝납니다</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;margin-top:6px;padding:14px 20px;border:1px dashed rgba(255,255,255,.5);border-radius:16px;max-width:900px">
+      <span style="flex:none;font-size:20px">🛵</span>
+      <span style="font-size:15px;font-weight:700;line-height:1.55;opacity:.95;text-wrap:pretty">여비요는 계산은 빠르지만 책임은 안 집니다. 더 주기도 하고 덜 주기도 하니, 최종 확인은 사람이 하는 겁니다. 참고용으로만 쓰세요.</span>
+    </div>
+  </section>
+
+  <section style="min-height:940px;padding:96px;display:flex;flex-direction:column;gap:56px">
+    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:48px">
+      <div style="max-width:760px;display:flex;flex-direction:column;gap:18px">
+        <div style="font-size:15px;font-weight:800;color:#A60035">여비요가 하는 일</div>
+        <div style="font-size:52px;font-weight:900;line-height:1.2;letter-spacing:-0.045em;text-wrap:pretty">올리고, 고치고, 인쇄하면 끝</div>
+        <p style="margin:0;font-size:18px;line-height:1.7;color:#32323A;text-wrap:pretty">출장승인 파일을 올리면 출장일수에 따라 일비와 식비를 자동으로 산출합니다. 숙박비는 지역별 상한액을 적용하고, 승용차 운임은 기준운임표의 왕복액을 자동으로 채웁니다. 목록에서 값을 고치면 신청서와 내역서에 그대로 반영됩니다.</p>
+      </div>
+      <div style="flex:none;text-align:right">
+        <div style="font-family:Pretendard,sans-serif;font-weight:900;font-size:72px;line-height:1;letter-spacing:-0.05em;color:#FA0050">3단계</div>
+        <div style="font-size:15px;font-weight:800;color:#5A5A61;margin-top:10px">업로드 · 확인 · 출력</div>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:22px">
+      <div style="border:1px solid #DEE0E4;border-radius:20px;background:#FFFFFF;padding:28px 26px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 3px rgba(26,26,26,.05)">
+        <div style="font-size:14px;font-weight:800;color:#A60035">01 · 업로드</div>
+        <div style="font-size:24px;font-weight:900;letter-spacing:-0.03em">파일 여러 개 한 번에</div>
+        <p style="margin:0;font-size:15px;line-height:1.65;color:#32323A">관내·관외 파일을 같이 올려도 됩니다. 중복 건은 알아서 걸러내고, 관내만·관외만으로 골라 볼 수 있습니다.</p>
+      </div>
+      <div style="border:1px solid #DEE0E4;border-radius:20px;background:#FFFFFF;padding:28px 26px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 3px rgba(26,26,26,.05)">
+        <div style="font-size:14px;font-weight:800;color:#A60035">02 · 확인</div>
+        <div style="font-size:24px;font-weight:900;letter-spacing:-0.03em">표에서 바로 수정</div>
+        <p style="margin:0;font-size:15px;line-height:1.65;color:#32323A">출장자·일정·출발지·도착지·교통편·금액을 셀에서 고칩니다. 줄 추가와 삭제도 표 안에서 끝납니다.</p>
+      </div>
+      <div style="border:1px solid #DEE0E4;border-radius:20px;background:#FFFFFF;padding:28px 26px;display:flex;flex-direction:column;gap:12px;box-shadow:0 1px 3px rgba(26,26,26,.05)">
+        <div style="font-size:14px;font-weight:800;color:#A60035">03 · 출력</div>
+        <div style="font-size:24px;font-weight:900;letter-spacing:-0.03em">신청서 · 내역서 · 엑셀</div>
+        <p style="margin:0;font-size:15px;line-height:1.65;color:#32323A">국내여비 정산 신청서와 정산 내역서를 서식 그대로 인쇄하고, 목록은 엑셀로 내보냅니다.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:28px;border-top:1px solid #DEE0E4;padding-top:32px">
+      <div style="max-width:640px;display:flex;flex-direction:column;gap:6px">
+        <div style="font-size:14px;font-weight:900;color:#A60035">주의 · 여비요는 계산기이지 회계담당자가 아닙니다</div>
+        <p style="margin:0;font-size:14px;line-height:1.65;color:#5A5A61;text-wrap:pretty">자동 계산은 오차가 있습니다. 과다지급도, 과소지급도 일어날 수 있습니다. 규정과 증빙으로 한 번 더 확인하시고, 참고용 자료로만 활용해 주세요. <span style="color:#FA0050;font-weight:800">감사에서는 여비요를 증인으로 부를 수 없습니다.</span></p>
+      </div>
+      <a href="여비요 팀버전.dc.html" style="margin-left:auto;display:inline-flex;align-items:center;justify-content:center;min-height:56px;padding:0 30px;border-radius:999px;background:#FA0050;color:#FFFFFF;font-size:17px;font-weight:800;box-shadow:0 8px 20px rgba(250,0,80,.28)">여비요 시작하기</a>
+    </div>
+  </section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:940}}">class Component extends DCLogic {
+  state = { sound: false };
+
+  ac() {
+    if (!this._ac) this._ac = new (window.AudioContext || window.webkitAudioContext)();
+    if (this._ac.state === 'suspended') this._ac.resume();
+    return this._ac;
+  }
+
+  whoosh() {
+    try {
+      const ac = this.ac(), t = ac.currentTime, end = t + 1.8;
+      const out = ac.createGain();
+      out.gain.setValueAtTime(0.0001, t);
+      out.gain.exponentialRampToValueAtTime(0.05, t + 0.55);
+      out.gain.setValueAtTime(0.05, t + 1.35);
+      out.gain.exponentialRampToValueAtTime(0.0001, end);
+      const lp = ac.createBiquadFilter();
+      lp.type = 'lowpass';
+      lp.frequency.setValueAtTime(420, t);
+      lp.frequency.linearRampToValueAtTime(1500, t + 1.2);
+      lp.frequency.linearRampToValueAtTime(700, end);
+      lp.Q.value = 3;
+      lp.connect(out).connect(ac.destination);
+
+      // 엔진 폭발음: 게인 LFO로 두두두두
+      const puff = ac.createGain();
+      puff.gain.value = 0.5;
+      const lfo = ac.createOscillator(), lfoG = ac.createGain();
+      lfo.type = 'square';
+      lfo.frequency.setValueAtTime(26, t);
+      lfo.frequency.linearRampToValueAtTime(46, t + 1.2);
+      lfo.frequency.linearRampToValueAtTime(30, end);
+      lfoG.gain.value = 0.5;
+      lfo.connect(lfoG).connect(puff.gain);
+      puff.connect(lp);
+
+      [58, 87, 116].forEach((base, i) => {
+        const o = ac.createOscillator(), g = ac.createGain();
+        o.type = i === 2 ? 'square' : 'sawtooth';
+        o.frequency.setValueAtTime(base, t);
+        o.frequency.linearRampToValueAtTime(base * 1.9, t + 1.1);
+        o.frequency.linearRampToValueAtTime(base * 1.25, end);
+        g.gain.value = i === 0 ? 0.9 : i === 1 ? 0.5 : 0.22;
+        o.connect(g).connect(puff);
+        o.start(t); o.stop(end + 0.05);
+      });
+      lfo.start(t); lfo.stop(end + 0.05);
+    } catch (e) {}
+  }
+
+  ding() {
+    try {
+      const ac = this.ac(), t = ac.currentTime;
+      [660, 880].forEach((f, i) => {
+        const o = ac.createOscillator(), g = ac.createGain();
+        o.type = 'square';
+        o.frequency.setValueAtTime(f, t + i * 0.06);
+        g.gain.setValueAtTime(0.0001, t + i * 0.06);
+        g.gain.exponentialRampToValueAtTime(i ? 0.03 : 0.05, t + i * 0.06 + 0.01);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + i * 0.06 + 0.34);
+        o.connect(g).connect(ac.destination);
+        o.start(t + i * 0.06); o.stop(t + i * 0.06 + 0.36);
+      });
+    } catch (e) {}
+  }
+
+  cycle = () => {
+    this.whoosh();
+    this._arrive = setTimeout(() => this.ding(), 1750);
+  };
+
+  start() {
+    this.cycle();
+    this._loop = setInterval(this.cycle, 6500);
+  }
+
+  stop() {
+    clearInterval(this._loop);
+    clearTimeout(this._arrive);
+    this._loop = null;
+  }
+
+  firstGesture = () => {
+    document.removeEventListener('pointerdown', this.firstGesture);
+    if (!this.state.sound) { this.setState({ sound: true }); this.start(); }
+  };
+
+  componentDidMount() {
+    document.addEventListener('pointerdown', this.firstGesture);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('pointerdown', this.firstGesture);
+    this.stop();
+  }
+
+  renderVals() {
+    return {
+      soundLabel: this.state.sound ? '소리 끄기' : '소리 켜기',
+      onToggleSound: () => {
+        const on = !this.state.sound;
+        this.setState({ sound: on });
+        if (on) this.start(); else this.stop();
+      },
+    };
+  }
+}</script>
+</body>
+</html>

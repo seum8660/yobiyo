@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/industry-e5a46917-796a-4bd4-950f-c827d8e20d29/styles.css">
+<script src="_ds/industry-e5a46917-796a-4bd4-950f-c827d8e20d29/_ds_bundle.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  body { margin: 0; background: #E9EAEC; color: #101010; font-family: Pretendard, sans-serif; letter-spacing: -0.02em; }
+  a { color: #A60035; text-decoration: none; }
+  a:hover { color: #FA0050; }
+</style>
+</helmet>
+
+<div style="display:flex;flex-direction:column;align-items:center;gap:40px;padding:40px 0">
+
+  <div style="position:relative;width:1080px;height:1080px;background:#FA0050;color:#FFFFFF;padding:96px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div style="font-size:32px;font-weight:800;letter-spacing:0.04em">여비 정산 대시보드</div>
+      <div style="font-size:28px;font-weight:800;opacity:.8">1 / 5</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:36px">
+      <div style="font-size:44px;font-weight:800">출장비 어디로 넣어드릴까요?</div>
+      <div style="font-family:Pretendard,sans-serif;font-weight:900;font-size:280px;line-height:0.9;letter-spacing:-0.07em">여비요</div>
+      <div style="width:100%;height:4px;background:rgba(255,255,255,.35)"></div>
+    </div>
+    <div style="font-size:56px;font-weight:900;line-height:1.35;letter-spacing:-0.04em;text-wrap:pretty">잡무에 시달리는 서무들이여!<br>여비요로 오라</div>
+  </div>
+
+  <div style="width:1080px;height:1080px;background:#FFFFFF;padding:96px;display:flex;flex-direction:column;justify-content:space-between">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div style="font-size:32px;font-weight:800;color:#A60035">이런 적 있으시죠</div>
+      <div style="font-size:28px;font-weight:800;color:#5A5A61">2 / 5</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:44px">
+      <div style="font-size:72px;font-weight:900;line-height:1.25;letter-spacing:-0.045em;text-wrap:pretty">한 건 정산에<br>창을 몇 개나 여시나요</div>
+      <div style="display:flex;flex-direction:column;gap:22px;font-size:34px;font-weight:700;color:#32323A">
+        <div style="display:flex;gap:18px"><span style="color:#FA0050">01</span><span>파일에서 이름과 날짜를 옮겨 적고</span></div>
+        <div style="display:flex;gap:18px"><span style="color:#FA0050">02</span><span>날짜 수를 세어 금액을 곱하고</span></div>
+        <div style="display:flex;gap:18px"><span style="color:#FA0050">03</span><span>표를 찾아 교통비를 확인하고</span></div>
+        <div style="display:flex;gap:18px"><span style="color:#FA0050">04</span><span>같은 값을 서류에 또 한 번 입력</span></div>
+      </div>
+    </div>
+    <div style="font-size:30px;font-weight:800;color:#5A5A61">한 사람이 열 건이면, 이 과정을 열 번</div>
+  </div>
+
+  <div style="width:1080px;height:1080px;background:#FFFFFF;padding:96px;display:flex;flex-direction:column;justify-content:space-between">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div style="font-size:32px;font-weight:800;color:#A60035">01 · 업로드</div>
+      <div style="font-size:28px;font-weight:800;color:#5A5A61">3 / 5</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:40px">
+      <div style="font-size:72px;font-weight:900;line-height:1.25;letter-spacing:-0.045em;text-wrap:pretty">파일 하나 올리면<br>금액이 채워집니다</div>
+      <p style="margin:0;font-size:34px;line-height:1.6;color:#32323A;text-wrap:pretty">날짜를 읽어 하루치 금액을 곱해 자동으로 계산합니다. 파일 여러 개를 한꺼번에 올려도 되고, 겹치는 건은 알아서 걸러냅니다.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+        <div style="border:2px solid #DEE0E4;border-radius:28px;padding:36px">
+          <div style="font-size:30px;font-weight:800;color:#5A5A61">걸리는 시간</div>
+          <div style="font-size:52px;font-weight:900;letter-spacing:-0.04em;margin-top:12px;white-space:nowrap">파일 올리고 3초</div>
+          <div style="font-size:26px;font-weight:700;color:#5A5A61;margin-top:10px">건수가 많아도 한 번에</div>
+        </div>
+        <div style="border:2px solid #DEE0E4;border-radius:28px;padding:36px">
+          <div style="font-size:30px;font-weight:800;color:#5A5A61">손으로 할 일</div>
+          <div style="font-size:52px;font-weight:900;letter-spacing:-0.04em;margin-top:12px;white-space:nowrap">확인하고 인쇄</div>
+          <div style="font-size:26px;font-weight:700;color:#5A5A61;margin-top:10px">계산기는 넣어두세요</div>
+        </div>
+      </div>
+    </div>
+    <div style="font-size:30px;font-weight:800;color:#5A5A61">가까운 출장은 교통비 0원으로 자동 처리</div>
+  </div>
+
+  <div style="width:1080px;height:1080px;background:#FFFFFF;padding:96px;display:flex;flex-direction:column;justify-content:space-between">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div style="font-size:32px;font-weight:800;color:#A60035">02 · 확인</div>
+      <div style="font-size:28px;font-weight:800;color:#5A5A61">4 / 5</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:40px">
+      <div style="font-size:72px;font-weight:900;line-height:1.25;letter-spacing:-0.045em;text-wrap:pretty">표에서 고치면<br>서식에 그대로</div>
+      <div style="display:flex;flex-direction:column;gap:20px;font-size:34px;font-weight:700;color:#32323A">
+        <div style="display:flex;gap:18px"><span style="color:#FA0050">·</span><span>이름 · 날짜 · 출발지 · 도착지 그 자리에서 수정</span></div>
+        <div style="display:flex;gap:18px"><span style="color:#FA0050">·</span><span>자동차는 왕복 교통비가 자동으로 들어옴</span></div>
+        <div style="display:flex;gap:18px"><span style="color:#FA0050">·</span><span>줄 추가 · 삭제 · 되살리기</span></div>
+      </div>
+      <div style="border-radius:28px;background:#FFF1F5;padding:40px;display:flex;flex-direction:column;gap:14px">
+        <div style="font-size:30px;font-weight:800;color:#A60035">숙박비도 알아서</div>
+        <div style="font-size:40px;font-weight:900;letter-spacing:-0.03em;color:#101010">지역별 한도에 맞춰 자동 계산</div>
+        <div style="font-size:26px;font-weight:700;color:#5A5A61">한도를 넘으면 넘은 금액을 따로 표시</div>
+      </div>
+    </div>
+    <div style="font-size:30px;font-weight:800;color:#5A5A61">하루를 넘기는 출장은 색으로 눈에 띄게</div>
+  </div>
+
+  <div style="width:1080px;height:1080px;background:#FA0050;color:#FFFFFF;padding:96px;display:flex;flex-direction:column;justify-content:space-between">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div style="font-size:32px;font-weight:800">03 · 출력</div>
+      <div style="font-size:28px;font-weight:800;opacity:.8">5 / 5</div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:44px">
+      <div style="font-size:84px;font-weight:900;line-height:1.2;letter-spacing:-0.05em;text-wrap:pretty">인쇄하면<br>정산은 끝</div>
+      <div style="display:flex;flex-direction:column;gap:20px;font-size:36px;font-weight:800">
+        <div>정산 신청서 — 서식 그대로 인쇄</div>
+        <div>전체 내역서 — 한 장으로 정리</div>
+        <div>엑셀 내보내기 — 바로 계산되는 숫자로</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:24px">
+      <div style="width:100%;height:4px;background:rgba(255,255,255,.35)"></div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between">
+        <div style="font-family:Pretendard,sans-serif;font-weight:900;font-size:120px;line-height:1;letter-spacing:-0.06em">여비요</div>
+        <div style="font-size:34px;font-weight:800">지금 열어보세요</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1080,&quot;height&quot;:1080}}"></script>
+</body>
+</html>

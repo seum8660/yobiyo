@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="omelette-owns-print" content="1">
+<link rel="stylesheet" href="_ds/industry-e5a46917-796a-4bd4-950f-c827d8e20d29/styles.css">
+<script src="_ds/industry-e5a46917-796a-4bd4-950f-c827d8e20d29/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+  body { margin: 0; font-family: var(--font-body), Pretendard, -apple-system, sans-serif; }
+  h1,h2,h3,h4,h5,h6 { font-family: var(--font-heading), Pretendard, sans-serif; }
+  a { color: var(--color-accent-700); } a:hover { color: var(--color-accent-900); }
+  input, select, button { font-family: inherit; }
+  input.cell { width: 100%; border: none; border-bottom: 1px solid var(--color-divider); background: transparent; font: inherit; color: inherit; padding: 3px 4px; text-align: right; }
+  input.cell:hover { border-color: var(--color-accent-400); }
+  input.cell:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 0; }
+  select.pick { font: inherit; font-weight: 400; font-size: 15px; text-align: center; text-align-last: center; padding: 4px 16px; border: 1px solid var(--color-divider); border-radius: 0; background: var(--color-surface); color: inherit; width: 100%; cursor: pointer;
+    -webkit-appearance: none; appearance: none;
+    background-image: linear-gradient(45deg, transparent 50%, #8A8A90 50%), linear-gradient(135deg, #8A8A90 50%, transparent 50%);
+    background-position: calc(100% - 11px) calc(50% - 1px), calc(100% - 7px) calc(50% - 1px);
+    background-size: 4px 4px, 4px 4px; background-repeat: no-repeat; }
+  select.pick option { text-align: center; }
+  select.pick:hover { border-color: var(--color-accent-400); }
+  .sheet table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  .sheet th, .sheet td { border: 1px solid #1d1f20; padding: 6px 8px; font-size: 12px; vertical-align: middle; }
+  .sheet th { font-weight: 500; background: #f4f4f5; text-align: center; }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  /* — 요기요 톤: 레드핑크 강조 · 둥근 카드 (신청서 시트는 원본 서식 유지) — */
+  :root {
+    --color-bg: #FAFAFB; --color-surface: #FFFFFF; --color-text: #1A1A1A;
+    --color-accent: #FA0050; --color-accent-100: #FFF1F5; --color-accent-200: #FFD0DD;
+    --color-accent-300: #FFA5BD; --color-accent-400: #FF6F92; --color-accent-500: #FA0050;
+    --color-accent-600: #D60044; --color-accent-700: #A60035; --color-accent-800: #770026;
+    --color-accent-900: #470017; --color-divider: #DEE0E4;
+    --color-neutral-600: #5A5A61; --color-neutral-700: #32323A;
+    --font-heading: Pretendard; --font-heading-weight: 800;
+    --font-body: Pretendard;
+    --yg-shadow-sm: 0 1px 3px rgba(26,26,26,.05);
+    --yg-shadow-md: 0 5px 16px rgba(26,26,26,.09);
+    --yg-shadow-cta: 0 8px 20px rgba(250,0,80,.28);
+  }
+  body { background: #FAFAFB; color: #101010; font-size: 16px; letter-spacing: -0.02em; }
+  h1 { font-size: 30px !important; font-weight: 900; letter-spacing: -0.045em; }
+  h2, h3, h4, h5 { font-weight: 800; letter-spacing: -0.02em; }
+  .blueprint { border: 1px solid #DEE0E4 !important; border-radius: 20px; background: #FFFFFF; box-shadow: var(--yg-shadow-sm); }
+  .blueprint > .corner { display: none; }
+  .btn { border: 0; border-radius: 999px; min-height: 44px; padding: 0 18px; font-weight: 800; font-size: 15px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    transition: background 120ms cubic-bezier(.22,1,.36,1), transform 80ms ease; }
+  .btn-primary { background: #FA0050; color: #FFFFFF; box-shadow: var(--yg-shadow-cta); }
+  .btn-primary:hover { background: #D60044; }
+  .btn-primary:active { background: #A60035; transform: scale(.98); }
+  .btn-secondary { background: #FFF1F5; color: #A60035; box-shadow: none; }
+  .btn-secondary:hover { background: #FFD0DD; }
+  .btn-secondary:active { transform: scale(.98); }
+  .input, select.pick { border: 1px solid #B4B9C1; border-radius: 10px; background: #FAFAFB; color: #1A1A1A;
+    box-shadow: none; padding-inline: 14px; font-weight: 600; }
+  .input:hover, select.pick:hover { border-color: #DDDFE2; }
+  .input:focus-visible, select.pick:focus-visible { outline: none; border-color: #FA0050; background: #FFFFFF; box-shadow: 0 0 0 3px #FFF1F5; }
+  .seg { border: 0; border-radius: 999px; background: #F5F6F8; padding: 4px; gap: 2px; overflow: visible; box-shadow: none; }
+  .seg-opt { border-radius: 999px; font-weight: 800; font-size: 15px; padding: 10px 18px; color: #7C7C82; }
+  .seg-opt + .seg-opt { border-left: none; }
+  .seg-opt:hover { color: #4A4A52; }
+  .seg-opt:has(input:checked) { background: #FA0050; color: #FFFFFF; }
+  #scopeSeg .seg-opt:has(input:checked) { background: #14713C; color: #FFFFFF; }
+  .table { font-size: 15px; }
+  .table th, .table td { vertical-align: middle; }
+  .table th { text-transform: none; letter-spacing: -0.005em; font-size: 15px; font-weight: 500; color: #7C7C82; border-bottom: 1px solid #A9AFB8; }
+  .table td { border-bottom: 1px solid #C3C8D0; }
+  .table tbody tr:hover { background: #FFF8FA; }
+  input.cell { border-bottom: 1px solid #DDDFE2; font-weight: 400; font-size: 14px; border-radius: 0; }
+  input.cell:hover { border-color: #FA0050; }
+  input.cell:focus-visible { outline: none; border-bottom: 2px solid #FA0050; }
+  @page { size: A4; margin: 12mm; }
+  @media print {
+    [data-noprint] { display: none !important; }
+    body { background: #fff; }
+    .sheet { box-shadow: none !important; margin: 0 !important; width: auto !important; min-height: 0 !important; padding: 0 !important; page-break-after: always; }
+    .sheet:last-of-type { page-break-after: auto; }
+    .sheet-wide { width: 1123px !important; transform: scale(0.6); transform-origin: top left; }
+  }
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--color-bg);color:var(--color-text);font-variant-numeric:tabular-nums">
+  <div style="width:1440px;margin:0 auto;padding:0 40px 72px">
+
+    <div class="nav" data-noprint="" style="padding:16px 0;border-bottom:1px solid var(--color-divider);gap:20px">
+      <div class="nav-brand" style="font-size:19px;margin-right:auto"><br></div>
+      
+      
+      <a href="여비요 인트로.dc.html" class="btn" style="text-decoration:none;gap:8px;background:#FA0050;color:#FFFFFF"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg>인트로</a>
+      <a href="여비요 개인버전.dc.html" class="btn btn-ghost" style="text-decoration:none;gap:8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>개인 버전으로</a>
+      <button class="btn btn-secondary" type="button" onClick="{{ onToggleSound }}" style="min-height:38px;padding:0 14px;font-size:12px">{{ soundLabel }}</button>
+      <button class="btn btn-secondary" type="button" onClick="{{ onClearAll }}">초기화</button>
+      <button class="btn btn-primary" type="button" onClick="{{ onPrint }}">신청서 인쇄</button>
+    </div>
+
+    <div data-noprint="" style="display:flex;align-items:center;gap:12px;margin-top:16px;padding:12px 18px;border:1px dashed #FA0050;border-radius:12px;background:rgba(250,0,80,.05)">
+      <span style="flex:none;font-size:16px">🛵</span>
+      <span style="font-size:13px;font-weight:700;line-height:1.6;color:#32323A;text-wrap:pretty">계산은 여비요가, 책임은 담당자가. 오류로 과다·과소 지급이 생길 수 있으니 <b>참고용 자료로만</b> 쓰시고 지급 전에 규정과 증빙으로 한 번 더 확인해 주세요.</span>
+    </div>
+
+    <div data-noprint="" style="display:flex;align-items:flex-end;justify-content:space-between;gap:40px;padding:30px 0 22px">
+      <div style="max-width:660px">
+        <div style="font-size:14px;font-weight:800;color:#A60035;margin-bottom:10px">출장승인 파일 → 일비·식비 자동산출 → 신청서 출력</div>
+        <h1 style="font-size:44px;margin:0 0 10px">개인별 여비 산출과 신청서 출력</h1>
+        <p style="margin: 0; font-size: 16px; line-height: 1.6; color: var(--color-neutral-700); text-wrap: pretty; width: 734px; height: 77px">출장승인 엑셀을 올리면 출장일수에 따라 일비와 식비가 자동으로 계산됩니다. 자동 산출된 일비·식비도 셀에서 직접 고쳐 쓸 수 있고, 줄 추가로 새 출장 건을 직접 입력할 수 있습니다. 입력한 값이 아래 신청서에 그대로 들어갑니다.</p>
+      </div>
+      <div class="seg" style="flex:none">
+        <label class="seg-opt"><input type="radio" name="view" checked="{{ viewEdit }}" onChange="{{ onViewEdit }}">금액 산출</label>
+        <label class="seg-opt"><input type="radio" name="view" checked="{{ viewList }}" onChange="{{ onViewList }}">내역 출력</label>
+        <label class="seg-opt"><input type="radio" name="view" checked="{{ viewForm }}" onChange="{{ onViewForm }}">신청서 출력</label>
+      </div>
+    </div>
+
+    <div data-noprint="" class="blueprint" style="display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;padding:16px 20px;margin-bottom:26px">
+      <span style="font-size: 15px; font-weight: 800; color: #A60035; flex: none">1 · 출장승인 파일</span>
+      <label class="btn btn-secondary" style="flex:none;cursor:pointer">
+엑셀 파일 선택 (여러 개 가능)
+        <input type="file" accept=".xlsx" multiple="{{ true }}" onChange="{{ onFile }}" style="display:none">
+      </label>
+      <span style="font-size:15px;color:var(--color-neutral-700);flex:1 1 220px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ fileLabel }}</span>
+      <span style="font-size:15px;color:var(--color-neutral-700);flex:none">{{ scopeCounts }}</span>
+      <div class="seg" id="scopeSeg" style="flex:none">
+        <label class="seg-opt" style="padding:8px 14px"><input type="radio" name="scope" checked="{{ scopeAll }}" onChange="{{ onScopeAll }}">전체</label>
+        <label class="seg-opt" style="padding:8px 14px"><input type="radio" name="scope" checked="{{ scopeIn }}" onChange="{{ onScopeIn }}">관내</label>
+        <label class="seg-opt" style="padding:8px 14px"><input type="radio" name="scope" checked="{{ scopeOut }}" onChange="{{ onScopeOut }}">관외</label>
+      </div>
+      <span style="font-size: 15px; font-weight: 800; color: #A60035; flex: none">2 · 출장자 검색</span>
+      <label class="input" style="display:flex;align-items:center;gap:8px;width:240px;flex:none;min-height:44px">
+        <span style="font-size:14px;font-weight:800;color:var(--color-neutral-600);white-space:nowrap;flex:none">이름</span>
+        <input style="border:none;background:transparent;outline:none;font-size:14px;font-weight:600;flex:1;min-width:0" placeholder="예: 김ㅇㅇ" value="{{ query }}" onChange="{{ onQuery }}">
+      </label>
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    </div>
+
+    <div data-noprint="" class="blueprint" style="display:flex;align-items:center;gap:14px;padding:16px 20px;margin-bottom:26px">
+      <span style="font-size: 15px; font-weight: 800; color: #A60035; flex: none">3 · 출장기간</span>
+      <input class="input" type="date" style="width:158px;min-height:44px;flex:none" value="{{ dFrom }}" onChange="{{ onDFrom }}">
+      <span style="font-size:13px;color:var(--color-neutral-600);flex:none">~</span>
+      <input class="input" type="date" style="width:158px;min-height:44px;flex:none" value="{{ dTo }}" onChange="{{ onDTo }}">
+      <button class="btn btn-secondary" type="button" onClick="{{ onDReset }}" style="padding:7px 14px;font-size:13px;flex:none">기간 해제</button>
+      <span style="font-size:14px;color:var(--color-neutral-600);margin-left:auto">기간과 겹치는 출장만 표시됩니다</span>
+      <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+    </div>
+
+    <sc-if value="{{ hasPeople }}" hint-placeholder-val="{{ false }}">
+      <div data-noprint="" class="blueprint" style="padding:16px 20px;margin-bottom:26px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+          <span style="font-size:14px;font-weight:800;color:var(--color-neutral-700)">출장자 선택</span>
+          <span style="font-size:14px;color:var(--color-neutral-600)">{{ pickLabel }}</span>
+          <span style="font-size:14px;color:var(--color-neutral-600);margin-left:auto">아무도 고르지 않으면 전체가 나옵니다</span>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <button type="button" onClick="{{ onSelectAll }}" style="border:none;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:inset 0 0 0 1px #F0F1F3;background:{{ allBg }};color:{{ allFg }}">전체</button>
+          <sc-for list="{{ people }}" as="pp" hint-placeholder-count="8">
+            <button type="button" onClick="{{ pp.onPick }}" style="border:none;border-radius:999px;padding:10px 16px;font-size:13px;font-weight:800;cursor:pointer;box-shadow:inset 0 0 0 1px #F0F1F3;background:{{ pp.bg }};color:{{ pp.fg }}">{{ pp.name }}</button>
+          </sc-for>
+        </div>
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      </div>
+    </sc-if>
+
+    <div data-noprint="" style="display:grid;grid-template-columns:repeat(5,1fr);gap:18px;margin-bottom:28px">
+      <div class="blueprint" style="padding:22px 24px;background:#FA0050;color:#FFFFFF;border-color:#FA0050 !important;box-shadow:var(--yg-shadow-cta)">
+        <div style="font-size: 15px; font-weight: 800; color: #FFFFFF; margin-bottom: 8px">정산 합계</div>
+        <div style="font-family:var(--font-heading),Pretendard,sans-serif;font-weight:900;font-size:34px;line-height:1;letter-spacing:-0.04em">{{ grandTotalFmt }}</div>
+        
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      </div>
+      <div class="blueprint" style="padding:18px 20px">
+        <div style="font-size: 15px; font-weight: 800; color: var(--color-neutral-600); margin-bottom: 8px">일비 (자동)</div>
+        <div style="font-family:var(--font-heading),Pretendard,sans-serif;font-weight:900;font-size:28px;line-height:1;letter-spacing:-0.035em">{{ perDiemFmt }}</div>
+        
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      </div>
+      <div class="blueprint" style="padding:18px 20px">
+        <div style="font-size: 15px; font-weight: 800; color: var(--color-neutral-600); margin-bottom: 8px">식비 (자동)</div>
+        <div style="font-family:var(--font-heading),Pretendard,sans-serif;font-weight:900;font-size:28px;line-height:1;letter-spacing:-0.035em">{{ mealFmt }}</div>
+        
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      </div>
+      <div class="blueprint" style="padding:18px 20px">
+        <div style="font-size: 15px; font-weight: 800; color: var(--color-neutral-600); margin-bottom: 8px">운임 (직접입력)</div>
+        <div style="font-family:var(--font-heading),Pretendard,sans-serif;font-weight:900;font-size:28px;line-height:1;letter-spacing:-0.035em">{{ fareTotalFmt }}</div>
+        
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      </div>
+      <div class="blueprint" style="padding:18px 20px">
+        <div style="font-size: 15px; font-weight: 800; color: var(--color-neutral-600); margin-bottom: 8px">숙박비 (직접입력)</div>
+        <div style="font-family:var(--font-heading),Pretendard,sans-serif;font-weight:900;font-size:28px;line-height:1;letter-spacing:-0.035em">{{ lodgeTotalFmt }}</div>
+        
+        <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+      </div>
+    </div>
+
+    <sc-if value="{{ viewEdit }}" hint-placeholder-val="{{ true }}">
+      <div data-noprint="">
+        <div style="display:flex;align-items:center;gap:16px;padding:12px 0;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider);margin-bottom:18px">
+          <span style="font-size: 15px; font-weight: 800; color: #A60035">4 · 자동산출 단가</span>
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px">일비/일
+            <input class="input" style="width:100px;min-height:38px;text-align:right" value="{{ rateDay }}" onChange="{{ onRateDay }}">
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px">식비/일
+            <input class="input" style="width:100px;min-height:38px;text-align:right" value="{{ rateMeal }}" onChange="{{ onRateMeal }}">
+          </label>
+          <span style="font-size: 15px; font-weight: 800; color: #A60035">5 · 교통편·운임·숙박비 직접 입력</span>
+          <span style="font-size:14px;color:var(--color-neutral-600);margin-left:auto">출장일수 = 시작일~종료일 (승인 파일 기준)</span>
+        </div>
+
+        <table class="table">
+          <thead>
+            <tr>
+              <th style="width: 86px; text-align: center">구분</th>
+              <th style="width: 68px; text-align: center">출장자</th>
+              <th style="width: 112px; text-align: center">일정</th>
+              <th style="width: 108px; text-align: center">출발지</th>
+              <th style="width: 108px; text-align: center">도착지</th>
+              <th style="width: 220px; text-align: center">출장목적</th>
+              <th style="width: 100px; text-align: center">교통편</th>
+              <th style="width: 92px; text-align: center">운임</th>
+              <th style="width: 84px; text-align: center">일비</th>
+              <th style="width: 84px; text-align: center">식비</th>
+              <th style="width: 92px; text-align: center">숙박비</th>
+              <th style="width: 104px; text-align: center">합계</th>
+              <th style="width: 84px; text-align: center">직급</th>
+              <th style="width:40px"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <sc-for list="{{ trips }}" as="t" hint-placeholder-count="12">
+              <tr>
+                <td style="position:relative">
+                  <button type="button" onClick="{{ t.scopeMenu.onToggle }}" style="width:100%;text-align:center;font:inherit;font-size:15px;padding:5px 6px;border:1px solid var(--color-divider);background:#FFFFFF;color:inherit;cursor:pointer">{{ t.scopeMenu.value }}</button>
+                  <sc-if value="{{ t.scopeMenu.open }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:absolute;left:4px;right:4px;top:calc(100% - 4px);z-index:40;background:#FFFFFF;border:1px solid #DEE0E4;border-radius:12px;box-shadow:0 10px 24px rgba(26,26,26,.14);padding:4px">
+                      <sc-for list="{{ t.scopeMenu.options }}" as="o" hint-placeholder-count="2">
+                        <button type="button" onClick="{{ o.onPick }}" style="display:block;width:100%;text-align:center;font:inherit;font-size:15px;padding:8px 4px;border:0;border-radius:8px;background:{{ o.bg }};color:{{ o.fg }};cursor:pointer">{{ o.label }}</button>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </td>
+                <td><input class="cell" style="text-align:center" value="{{ t.name }}" onChange="{{ t.onName }}"></td>
+                <td style="background:{{ t.stayBg }}">
+                  <input class="cell" type="date" style="text-align:center;font-size:15px" value="{{ t.from }}" onChange="{{ t.onDay }}">
+                  <sc-if value="{{ t.isStay }}" hint-placeholder-val="{{ false }}">
+                    <div style="margin-top:4px;text-align:center">
+                      <span style="display:inline-block;font-size:12px;font-weight:800;padding:2px 8px;border-radius:999px;background:#FFF3CD;color:#7A5200">{{ t.nightsLabel }}</span>
+                    </div>
+                  </sc-if>
+                </td>
+                <td>
+                  <input class="cell" list="placeList" style="text-align: center; font-size: 15px" value="{{ t.origin }}" onChange="{{ t.onOrigin }}">
+                </td>
+                <td>
+                  <input class="cell" list="placeList" style="text-align: center; font-size: 15px" value="{{ t.place }}" onChange="{{ t.onPlace }}">
+                </td>
+                <td>
+                  <input class="cell" style="text-align: center; font-size: 15px; color: var(--color-neutral-700)" value="{{ t.purpose }}" onChange="{{ t.onPurpose }}">
+                </td>
+                <td style="position:relative">
+                  <button type="button" onClick="{{ t.transportMenu.onToggle }}" style="width:100%;text-align:center;font:inherit;font-size:15px;padding:5px 6px;border:1px solid var(--color-divider);background:#FFFFFF;color:inherit;cursor:pointer">{{ t.transportMenu.value }}</button>
+                  <sc-if value="{{ t.transportMenu.open }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:absolute;left:4px;right:4px;top:calc(100% - 4px);z-index:40;max-height:280px;overflow:auto;background:#FFFFFF;border:1px solid #DEE0E4;border-radius:12px;box-shadow:0 10px 24px rgba(26,26,26,.14);padding:4px">
+                      <sc-for list="{{ t.transportMenu.options }}" as="o" hint-placeholder-count="6">
+                        <button type="button" onClick="{{ o.onPick }}" style="display:block;width:100%;text-align:center;font:inherit;font-size:15px;padding:8px 4px;border:0;border-radius:8px;background:{{ o.bg }};color:{{ o.fg }};cursor:pointer">{{ o.label }}</button>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </td>
+                <td><input class="cell" value="{{ t.fare }}" onChange="{{ t.onFare }}"></td>
+                <td><input class="cell" value="{{ t.perDiem }}" onChange="{{ t.onPerDiem }}"></td>
+                <td><input class="cell" value="{{ t.meal }}" onChange="{{ t.onMeal }}"></td>
+                <td><input class="cell" value="{{ t.lodge }}" onChange="{{ t.onLodge }}"></td>
+                <td class="num" style="font-family:var(--font-heading),Pretendard,sans-serif;font-weight:400;font-size:16px">{{ t.totalFmt }}</td>
+                <td style="position:relative">
+                  <button type="button" onClick="{{ t.rankMenu.onToggle }}" style="width:100%;text-align:center;font:inherit;font-size:15px;padding:5px 6px;border:1px solid var(--color-divider);background:#FFFFFF;color:inherit;cursor:pointer">{{ t.rankMenu.value }}</button>
+                  <sc-if value="{{ t.rankMenu.open }}" hint-placeholder-val="{{ false }}">
+                    <div style="position:absolute;left:4px;right:4px;top:calc(100% - 4px);z-index:40;background:#FFFFFF;border:1px solid #DEE0E4;border-radius:12px;box-shadow:0 10px 24px rgba(26,26,26,.14);padding:4px">
+                      <sc-for list="{{ t.rankMenu.options }}" as="o" hint-placeholder-count="6">
+                        <button type="button" onClick="{{ o.onPick }}" style="display:block;width:100%;text-align:center;font:inherit;font-size:15px;padding:8px 4px;border:0;border-radius:8px;background:{{ o.bg }};color:{{ o.fg }};cursor:pointer">{{ o.label }}</button>
+                      </sc-for>
+                    </div>
+                  </sc-if>
+                </td>
+                <td style="text-align:center">
+                  <button type="button" title="이 줄 삭제" onClick="{{ t.onDelete }}" style="width:28px;height:28px;border:1px solid var(--color-divider);border-radius:999px;background:#FFFFFF;color:var(--color-neutral-700);font-size:14px;font-weight:800;cursor:pointer;line-height:1" style-hover="border-color:#FA0050;color:#FA0050">×</button>
+                </td>
+              </tr>
+            </sc-for>
+          </tbody>
+        </table>
+
+        <datalist id="placeList">
+          <sc-for list="{{ placeOptions }}" as="o" hint-placeholder-count="0">
+            <option value="{{ o }}"></option>
+          </sc-for>
+        </datalist>
+
+        <div style="display:flex;align-items:center;gap:12px;margin-top:14px">
+          <span style="font-size:14px;color:var(--color-neutral-600);margin-right:auto">삭제한 줄은 정산 합계·신청서·내역서에서 함께 버집니다</span>
+          <sc-if value="{{ hasRemoved }}" hint-placeholder-val="{{ false }}">
+            <button class="btn btn-ghost" type="button" onClick="{{ onRestore }}" style="font-size:13px">삭제한 {{ removedCount }}건 되살리기</button>
+          </sc-if>
+          <button class="btn btn-secondary" type="button" onClick="{{ onAddRow }}" style="font-size:13px">+ 줄 추가</button>
+        </div>
+
+        <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+          <div style="padding:56px 0;text-align:center;font-size:14px;color:var(--color-neutral-600)">{{ emptyMsg }}</div>
+        </sc-if>
+
+        <div class="blueprint" style="padding:18px 20px;margin-top:26px">
+          <h5 style="margin:0 0 10px;font-size:15px">개인별 합계</h5>
+          <sc-for list="{{ persons }}" as="p" hint-placeholder-count="6">
+            <div style="display:flex;align-items:baseline;gap:12px;padding:7px 0;border-top:1px solid color-mix(in srgb, var(--color-text) 8%, transparent)">
+              <span style="font-size:13px;min-width:64px">{{ p.name }}</span>
+              <span style="font-size:14px;color:var(--color-neutral-600)">{{ p.count }}건</span>
+              <span style="font-size:14px;color:var(--color-neutral-600);margin-left:auto">운임 {{ p.fareFmt }} · 일비 {{ p.perDiemFmt }} · 식비 {{ p.mealFmt }} · 숙박 {{ p.lodgeFmt }}</span>
+              <span style="font-family:var(--font-heading),Pretendard,sans-serif;font-weight:900;font-size:16px;min-width:92px;text-align:right">{{ p.totalFmt }}</span>
+            </div>
+          </sc-for>
+          <i class="corner tl"></i><i class="corner tr"></i><i class="corner bl"></i><i class="corner br"></i>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ viewList }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div data-noprint="" style="display:flex;align-items:center;gap:14px;padding:12px 0;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider);margin-bottom:24px">
+          <span style="font-size:14px;color:var(--color-neutral-600)">선택한 {{ tripCount }}건이 내역서에 들어갑니다 · A4 가로 · 인쇄하면 이 줄은 나오지 않습니다</span>
+        </div>
+        <div class="sheet sheet-wide" style="width:1123px;margin:0 auto 28px;padding:48px 44px;background:#ffffff;box-shadow:var(--shadow-md);color:#1d1f20">
+          <div style="text-align:center;font-family:var(--font-heading),'Noto Sans KR',sans-serif;font-size:22px;margin:0 0 20px">{{ detailTitle }}</div>
+          <table>
+            
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+              
+            
+            <thead>
+              <tr>
+                <th rowspan="2" style="width:34px">연번</th>
+                <th rowspan="2" style="width:62px">출장자</th>
+                <th colspan="2" style="width:132px">출장기간</th>
+                <th rowspan="2" style="width:287px">출장지</th>
+                <th colspan="5" style="width:410px">개인 지급 금액</th>
+                <th rowspan="2" style="width:110px">비 고</th>
+              </tr>
+              <tr>
+                <th>출발일</th>
+                <th>도착일</th>
+                <th>일비</th>
+                <th>식비</th>
+                <th>운임<br>(왕복)</th>
+                <th>숙박</th>
+                <th>소계</th>
+              </tr>
+            </thead>
+            <tbody>
+              <sc-for list="{{ detailRows }}" as="d" hint-placeholder-count="8">
+                <tr>
+                  <td style="text-align:center">{{ d.idx }}</td>
+                  <td style="text-align:center">{{ d.name }}</td>
+                  <td style="text-align:center">{{ d.from }}</td>
+                  <td style="text-align:center">{{ d.to }}</td>
+                  <td style="font-size:11.5px">{{ d.place }}</td>
+                  <td class="num">{{ d.perDiem }}</td>
+                  <td class="num">{{ d.meal }}</td>
+                  <td class="num">{{ d.fare }}</td>
+                  <td class="num">{{ d.lodge }}</td>
+                  <td class="num">{{ d.sub }}</td>
+                  <td style="text-align:center;font-size:11px">{{ d.note }}</td>
+                </tr>
+              </sc-for>
+              <tr>
+                <th colspan="9">합계</th>
+                <td class="num" style="font-weight:700;background:#F1F2F4">{{ detailTotal }}</td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ viewForm }}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div data-noprint="" style="display:flex;align-items:center;gap:14px;padding:12px 0;border-top:1px solid var(--color-divider);border-bottom:1px solid var(--color-divider);margin-bottom:24px">
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px">소속
+            <input class="input" style="width:320px;min-height:38px" value="{{ org }}" onChange="{{ onOrg }}">
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px">신청일
+            <input class="input" style="width:150px;min-height:38px" value="{{ applyDate }}" onChange="{{ onApplyDate }}">
+          </label>
+          <span style="font-size:14px;color:var(--color-neutral-600);margin-left:auto">{{ tripCount }}장 · A4 세로 · 인쇄하면 이 줄은 나오지 않습니다</span>
+        </div>
+
+        <sc-for list="{{ sheets }}" as="s" hint-placeholder-count="2">
+          <div class="sheet" style="width:794px;min-height:1123px;margin:0 auto 28px;padding:56px 52px;background:#ffffff;box-shadow:var(--shadow-md);color:#1d1f20;display:flex;flex-direction:column">
+            <div style="font-size:10.5px;margin-bottom:18px">■ 공무원보수 등의 업무지침 제9장 [별지 제3호 서식]</div>
+            <div style="text-align:center;font-family:var(--font-heading),'Noto Sans KR',sans-serif;font-size:24px;font-weight:700;letter-spacing:0.06em;margin:0 0 26px">국내여비 정산 신청서</div>
+            <div style="font-size:10px;margin-bottom:8px">※ 「e-사람 시스템」 등 전산시스템으로 신청 시 수기 작성 생략</div>
+            <table>
+              <tbody>
+                <tr style="height:34px">
+                  <th style="width:96px">소 속</th>
+                  <td style="width:214px">{{ s.org }}</td>
+                  <th style="width:76px">직 급<br>(직위)</th>
+                  <td style="width:104px;text-align:center">{{ s.rank }}</td>
+                  <th style="width:76px">성 명</th>
+                  <td style="text-align:center">{{ s.name }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="height:14px"></div>
+            <table>
+              <tbody>
+                <tr style="height:32px">
+                  <th rowspan="2" style="width:96px">출장(부임)<br>일 정</th>
+                  <th style="width:84px">일 시</th>
+                  <td colspan="4" style="text-align:center;white-space:nowrap">{{ s.tripPeriod }}</td>
+                </tr>
+                <tr style="height:32px">
+                  <th>출장(부임)지</th>
+                  <td colspan="4" style="text-align:center">{{ s.place }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="height:14px"></div>
+            <table>
+              <tbody>
+                <tr style="height:58px">
+                  <th style="width:96px">숙 박 비</th>
+                  <th style="width:84px">상한액 또는<br>지급받은 선금</th>
+                  <td class="num" style="width:92px">{{ s.lodgeCapFmt }}</td>
+                  <th style="width:84px">실제 소요액</th>
+                  <td class="num" style="width:92px">{{ s.lodgeFmt }}</td>
+                  <th style="width:84px">초과지출 사유</th>
+                  <td style="font-size:10.5px">{{ s.lodgeExcess }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div style="height:14px"></div>
+            <table>
+              <tbody>
+                <tr style="height:30px">
+                  <th rowspan="{{ s.fareSpan }}" style="width:96px">운 임</th>
+                  <th style="width:92px">일 자</th><th style="width:76px">교통편</th><th>출발지</th><th>도착지</th><th style="width:66px">등 급</th><th style="width:86px">금 액</th>
+                </tr>
+                <sc-for list="{{ s.fareRows }}" as="f" hint-placeholder-count="1">
+                  <tr style="height:30px">
+                    <td style="text-align:center">{{ f.date }}</td>
+                    <td style="text-align:center">{{ f.transport }}</td>
+                    <td style="text-align:center">{{ f.from }}</td>
+                    <td style="text-align:center">{{ f.to }}</td>
+                    <td style="text-align:center">{{ f.grade }}</td>
+                    <td class="num">{{ f.amount }}</td>
+                  </tr>
+                </sc-for>
+                <sc-for list="{{ s.fareFillers }}" as="z" hint-placeholder-count="3">
+                  <tr style="height:30px">
+                    <td>{{ z.blank }}</td><td></td><td></td><td></td><td></td><td></td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+            <p style="margin:30px 0 0;font-size:12px;line-height:1.85">「공무원 여비 규정」제16조 제1항 · 제2항에 의하여 관계서류를 첨부하여 위와 같이 국내여비의 정산을 신청합니다.</p>
+            <p style="margin:22px 0 0;font-size:12px">첨 부 : 신용카드 매출전표 등 1부</p>
+            <div style="text-align:right;font-size:12.5px;margin:40px 0 26px;padding-right:44px;letter-spacing:0.35em">{{ s.applyDate }}</div>
+            <div style="display:flex;align-items:baseline;justify-content:flex-end;gap:22px;font-size:13px;padding-right:8px;margin-bottom:38px">
+              <span style="letter-spacing:0.3em">신 청 인</span>
+              <span style="letter-spacing:0.3em">성 명 {{ s.name }}</span>
+              <span style="font-size:10px;color:#6b6b70">(서명 또는 인)</span>
+            </div>
+            <div style="font-size:14.5px;font-weight:700;margin:auto 0 12px">전남광주통합특별시신안교육장 <span style="font-size:12px;font-weight:400">귀하</span></div>
+            <div style="border:1px solid #1d1f20">
+              <div style="background:#dcdde0;text-align:center;font-size:11px;padding:4px 0;border-bottom:1px solid #1d1f20">유의사항</div>
+              <div style="padding:12px 14px;font-size:10px;line-height:2">
+                <div>1. 정산하는 여비 항목 중 운임은 국내여행에 한함. 다만, 국내 · 외 항공운임은 별지 제6호 서식에 의함</div>
+                <div>2. 「공무원 여비 규정」제16조 제1항 단서에 따라 숙박비를 상향하는 경우 ‘초과지출 사유’ 작성</div>
+              </div>
+            </div>
+            <div style="text-align:right;font-size:9.5px;margin-top:10px">210㎜×297㎜[백상지 80g/㎡]</div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+  </div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:1000}}">
+class Component extends DCLogic {
+  state = {
+    trips: [], fare: [], aliases: [], removed: [],
+    fileNames: [],
+    view: 'edit', query: '', scope: '전체', selected: [], edits: {},
+    dFrom: '', dTo: '',
+    rateDay: 25000, rateMeal: 25000,
+    org: '전남광주통합특별시신안교육지원청 행정지원과',
+    applyDate: '2026년 8월 17일',
+    error: '',
+    sound: true,
+    openMenu: null,
+  };
+
+  closeMenus = () => { if (this.state.openMenu) this.setState({ openMenu: null }); };
+
+  componentWillUnmount() {
+    document.removeEventListener('mouseover', this.onHover, true);
+    document.removeEventListener('mouseout', this.onLeave, true);
+    document.removeEventListener('click', this.closeMenus);
+  }
+
+  playTick(kind) {
+    if (!this.state.sound) return;
+    try {
+      if (!this._ac) this._ac = new (window.AudioContext || window.webkitAudioContext)();
+      const ac = this._ac;
+      if (ac.state === 'suspended') ac.resume();
+      const t = ac.currentTime;
+      const o = ac.createOscillator(), g = ac.createGain();
+      const f = kind === 'primary' ? 880 : 620;
+      o.type = 'triangle';
+      o.frequency.setValueAtTime(f, t);
+      o.frequency.exponentialRampToValueAtTime(f * 1.5, t + 0.05);
+      g.gain.setValueAtTime(0.0001, t);
+      g.gain.exponentialRampToValueAtTime(kind === 'primary' ? 0.06 : 0.035, t + 0.008);
+      g.gain.exponentialRampToValueAtTime(0.0001, t + 0.09);
+      o.connect(g).connect(ac.destination);
+      o.start(t); o.stop(t + 0.1);
+    } catch (e) {}
+  }
+
+  onHover = e => {
+    const el = e.target.closest && e.target.closest('.btn, .seg-opt, [data-sfx], select.pick');
+    if (!el || el === this._last) return;
+    this._last = el;
+    this.playTick(el.classList.contains('btn-primary') ? 'primary' : 'soft');
+  };
+
+  onLeave = e => { if (e.target === this._last) this._last = null; };
+
+  componentDidMount() {
+    document.addEventListener('mouseover', this.onHover, true);
+    document.addEventListener('mouseout', this.onLeave, true);
+    document.addEventListener('click', this.closeMenus);
+    import('./trip-data.js').then(m =>
+      this.setState({ fare: m.FARE_TABLE, aliases: m.ALIASES }));
+  }
+
+  won(n) { return (n || 0).toLocaleString('ko-KR') + '원'; }
+  num(v) { const n = parseInt(String(v).replace(/[^0-9-]/g, ''), 10); return isNaN(n) ? 0 : n; }
+
+  days(a, b) {
+    const d1 = new Date(a.slice(0, 10)), d2 = new Date(b.slice(0, 10));
+    return Math.max(1, Math.round((d2 - d1) / 86400000) + 1);
+  }
+
+  lodgeCap(place) {
+    const p = place || '';
+    if (p.includes('서울')) return 100000;
+    if (['부산', '대구', '인천', '광주', '대전', '울산'].some(c => p.includes(c))) return 80000;
+    return 70000;
+  }
+
+  matchFare(dest) {
+    if (!dest) return null;
+    for (const [k, target] of this.state.aliases) {
+      if (dest.includes(k)) {
+        const hit = this.state.fare.find(f => f[2] === target);
+        if (hit) return { name: hit[2], fare: hit[3], via: k };
+      }
+    }
+    for (const row of this.state.fare) {
+      if (dest.includes(row[2])) return { name: row[2], fare: row[3], via: null };
+    }
+    return null;
+  }
+
+  menu(id, field, value, options, onPickCustom) {
+    const key = `${id}:${field}`;
+    return {
+      value: value || '선택',
+      open: this.state.openMenu === key,
+      onToggle: e => {
+        e.stopPropagation();
+        this.setState(s => ({ openMenu: s.openMenu === key ? null : key }));
+      },
+      options: options.map(o => ({
+        label: o,
+        bg: o === value ? '#FFF1F5' : '#FFFFFF',
+        fg: o === value ? '#A60035' : '#1A1A1A',
+        onPick: e => {
+          e.stopPropagation();
+          if (onPickCustom) onPickCustom(id, o);
+          else { this.setState({ openMenu: null }); this.set(id, field, o); }
+        },
+      })),
+    };
+  }
+
+  crc32(u8) {
+    let c, crc = 0xFFFFFFFF;
+    if (!this._crcT) {
+      this._crcT = [];
+      for (let n = 0; n < 256; n++) { c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; this._crcT[n] = c >>> 0; }
+    }
+    for (let i = 0; i < u8.length; i++) crc = this._crcT[(crc ^ u8[i]) & 0xFF] ^ (crc >>> 8);
+    return (crc ^ 0xFFFFFFFF) >>> 0;
+  }
+
+  zip(entries) {
+    const enc = new TextEncoder();
+    const parts = [], central = [];
+    let offset = 0;
+    for (const [name, text] of entries) {
+      const nameB = enc.encode(name), data = enc.encode(text), crc = this.crc32(data);
+      const lh = new DataView(new ArrayBuffer(30));
+      lh.setUint32(0, 0x04034b50, true); lh.setUint16(4, 20, true); lh.setUint16(6, 0, true);
+      lh.setUint16(8, 0, true); lh.setUint16(10, 0, true); lh.setUint16(12, 0, true);
+      lh.setUint32(14, crc, true); lh.setUint32(18, data.length, true); lh.setUint32(22, data.length, true);
+      lh.setUint16(26, nameB.length, true); lh.setUint16(28, 0, true);
+      parts.push(new Uint8Array(lh.buffer), nameB, data);
+      const ch = new DataView(new ArrayBuffer(46));
+      ch.setUint32(0, 0x02014b50, true); ch.setUint16(4, 20, true); ch.setUint16(6, 20, true);
+      ch.setUint32(16, crc, true); ch.setUint32(20, data.length, true); ch.setUint32(24, data.length, true);
+      ch.setUint16(28, nameB.length, true); ch.setUint32(42, offset, true);
+      central.push(new Uint8Array(ch.buffer), nameB);
+      offset += 30 + nameB.length + data.length;
+    }
+    const cdSize = central.reduce((s, p) => s + p.length, 0);
+    const eo = new DataView(new ArrayBuffer(22));
+    eo.setUint32(0, 0x06054b50, true);
+    eo.setUint16(8, entries.length, true); eo.setUint16(10, entries.length, true);
+    eo.setUint32(12, cdSize, true); eo.setUint32(16, offset, true);
+    return new Blob([...parts, ...central, new Uint8Array(eo.buffer)], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  }
+
+  exportXlsx(aoa, filename) {
+    const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const col = i => { let s = '', n = i; do { s = String.fromCharCode(65 + (n % 26)) + s; n = Math.floor(n / 26) - 1; } while (n >= 0); return s; };
+    const rows = aoa.map((r, ri) => '<row r="' + (ri + 1) + '">' + r.map((v, ci) => {
+      const ref = col(ci) + (ri + 1);
+      if (typeof v === 'number') return `<c r="${ref}"><v>${v}</v></c>`;
+      return `<c r="${ref}" t="inlineStr"><is><t>${esc(v ?? '')}</t></is></c>`;
+    }).join('') + '</row>').join('');
+    const sheet = `<?xml version="1.0" encoding="UTF-8"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>${rows}</sheetData></worksheet>`;
+    const blob = this.zip([
+      ['[Content_Types].xml', '<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/></Types>'],
+      ['_rels/.rels', '<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'],
+      ['xl/workbook.xml', '<?xml version="1.0" encoding="UTF-8"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="여비정산" sheetId="1" r:id="rId1"/></sheets></workbook>'],
+      ['xl/_rels/workbook.xml.rels', '<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/></Relationships>'],
+      ['xl/worksheets/sheet1.xml', sheet],
+    ]);
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = filename;
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  async parseXlsx(file) {
+    const u8 = new Uint8Array(await file.arrayBuffer());
+    const dv = new DataView(u8.buffer, u8.byteOffset, u8.byteLength);
+    let eocd = -1;
+    for (let i = u8.length - 22; i >= 0; i--) if (dv.getUint32(i, true) === 0x06054b50) { eocd = i; break; }
+    if (eocd < 0) throw new Error('xlsx 형식이 아닙니다');
+    const cdOff = dv.getUint32(eocd + 16, true), n = dv.getUint16(eocd + 10, true);
+    const files = {}; let p = cdOff;
+    for (let k = 0; k < n; k++) {
+      const nl = dv.getUint16(p + 28, true), el = dv.getUint16(p + 30, true), cl = dv.getUint16(p + 32, true);
+      const lho = dv.getUint32(p + 42, true);
+      const name = new TextDecoder().decode(u8.subarray(p + 46, p + 46 + nl));
+      const method = dv.getUint16(p + 10, true), csize = dv.getUint32(p + 20, true);
+      const ds = lho + 30 + dv.getUint16(lho + 26, true) + dv.getUint16(lho + 28, true);
+      files[name] = { data: u8.subarray(ds, ds + csize), method };
+      p += 46 + nl + el + cl;
+    }
+    const read = async e => e.method === 0
+      ? new TextDecoder().decode(e.data)
+      : await new Response(new Blob([e.data]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).text();
+    const unesc = s => s
+      .replace(/&#x([0-9a-fA-F]+);/g, (m, h) => String.fromCodePoint(parseInt(h, 16)))
+      .replace(/&#(\d+);/g, (m, d) => String.fromCodePoint(+d))
+      .replace(/&lt;/g, '<').replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&amp;/g, '&');
+    let strs = [];
+    if (files['xl/sharedStrings.xml']) {
+      const ss = await read(files['xl/sharedStrings.xml']);
+      strs = [...ss.matchAll(/<si>([\s\S]*?)<\/si>/g)]
+        .map(m => unesc([...m[1].matchAll(/<t[^>]*>([\s\S]*?)<\/t>/g)].map(x => x[1]).join('')));
+    }
+    const sheetKey = Object.keys(files).find(k => /^xl\/worksheets\/sheet1\.xml$/.test(k))
+      || Object.keys(files).find(k => /^xl\/worksheets\//.test(k));
+    const sh = await read(files[sheetKey]);
+    const rows = [];
+    for (const rm of sh.matchAll(/<row[^>]*r="(\d+)"[^>]*>([\s\S]*?)<\/row>/g)) {
+      const cells = {};
+      for (const cm of rm[2].matchAll(/<c r="([A-Z]+)\d+"([^>]*)>([\s\S]*?)<\/c>/g)) {
+        const t = /t="([^"]+)"/.exec(cm[2]);
+        const v = /<v>([\s\S]*?)<\/v>/.exec(cm[3]);
+        const is = /<is>[\s\S]*?<t[^>]*>([\s\S]*?)<\/t>/.exec(cm[3]);
+        let val = null;
+        if (t && t[1] === 's') val = strs[+v[1]];
+        else if (t && t[1] === 'inlineStr') val = is ? unesc(is[1]) : null;
+        else if (v) val = isNaN(+v[1]) ? v[1] : +v[1];
+        cells[cm[1]] = val;
+      }
+      rows.push({ r: +rm[1], cells });
+    }
+    const iso = v => new Date(Date.UTC(1899, 11, 30) + Math.round(v * 86400000)).toISOString().slice(0, 16);
+    const head = rows.find(r => Object.values(r.cells).some(v => typeof v === 'string' && v.includes('여비번호')));
+    if (!head) throw new Error('머리글(여비번호)을 찾지 못했습니다');
+    const hdr = {};
+    for (const [k, v] of Object.entries(head.cells)) if (typeof v === 'string') hdr[k] = v.replace(/\s/g, '');
+    const find = (kw, fb) => Object.keys(hdr).find(k => hdr[k].includes(kw)) || fb;
+    const cNo = find('여비번호', 'A'), cScope = find('출장구분', 'B'), cName = find('출장자', 'E');
+    const cPlace = find('출장지', 'T'), cPurp = find('출장목적', 'U');
+    const cStat = find('진행상태', null), cGrade = find('등급', null);
+    const cStart = find('출장기간', 'C');
+    const cEnd = String.fromCharCode(cStart.charCodeAt(0) + 1);
+    const out = []; let no = null, scope = null;
+    for (const { r, cells: c } of rows) {
+      if (r <= head.r) continue;
+      if (c[cNo] === '합계' || c[cScope] === '합계') continue;
+      if (typeof c[cNo] === 'string' && /^\d+$/.test(c[cNo])) {
+        no = c[cNo];
+        if (typeof c[cScope] === 'string') scope = c[cScope];
+      }
+      const name = c[cName];
+      if (!name || typeof name !== 'string') continue;
+      const start = typeof c[cStart] === 'number' ? c[cStart] : (typeof c[cNo] === 'number' ? c[cNo] : null);
+      if (typeof start !== 'number' || typeof c[cEnd] !== 'number') continue;
+      const raw = (typeof c[cScope] === 'string' ? c[cScope] : scope) || '';
+      out.push({
+        여비번호: no || '-',
+        출장구분: raw.includes('관내') ? '관내' : '관외',
+        출장구분세부: raw || '',
+        시작: iso(start), 종료: iso(c[cEnd]),
+        출장자: name,
+        여비등급: cGrade && c[cGrade] ? c[cGrade] : '',
+        진행상태: cStat && c[cStat] ? c[cStat] : '',
+        출장지: c[cPlace] || '', 출장목적: c[cPurp] || '',
+      });
+    }
+    if (!out.length) throw new Error('출장 행을 찾지 못했습니다 (여비대상목록 서식인지 확인해 주세요)');
+    return out;
+  }
+
+  onFile = e => {
+    const files = [...(e.target.files || [])];
+    if (!files.length) return;
+    const input = e.target;
+    Promise.all(files.map(f =>
+      this.parseXlsx(f).then(trips => ({ name: f.name, trips }))
+        .catch(err => ({ name: f.name, error: err.message }))
+    )).then(results => {
+      const ok = results.filter(r => r.trips);
+      const bad = results.filter(r => r.error);
+      this.setState(s => {
+        const seen = new Set(s.trips.map(t => `${t.여비번호}|${t.출장자}|${t.시작}`));
+        const added = [];
+        for (const r of ok) for (const t of r.trips) {
+          const k = `${t.여비번호}|${t.출장자}|${t.시작}`;
+          if (!seen.has(k)) { seen.add(k); added.push(t); }
+        }
+        const merged = [...s.trips, ...added]
+          .sort((a, b) => (a.시작 || '').localeCompare(b.시작 || '') || a.출장자.localeCompare(b.출장자, 'ko'));
+        return {
+          trips: merged,
+          fileNames: [...s.fileNames, ...ok.map(r => r.name)],
+          error: bad.length ? bad.map(b => `${b.name}: ${b.error}`).join(' / ') : '',
+        };
+      });
+      if (input) input.value = '';
+    });
+  };
+
+  set(id, key, v) {
+    this.setState(s => ({ edits: { ...s.edits, [id]: { ...(s.edits[id] || {}), [key]: v } } }));
+  }
+
+  fmtPeriod(a, b) {
+    const f = iso => {
+      const [d, t] = iso.split('T');
+      const [y, mo, dd] = d.split('-');
+      return `${y}. ${+mo}. ${+dd}. ${t}`;
+    };
+    return `${f(a)} ~ ${f(b)}`;
+  }
+
+  fmtMD(iso) {
+    const [, mo, d] = iso.slice(0, 10).split('-');
+    return `${+mo}/${+d}`;
+  }
+
+  fmtDot(iso) {
+    const [y, mo, d] = iso.slice(0, 10).split('-');
+    return `${y}. ${+mo}. ${+d}.`;
+  }
+
+  fmtKDate(iso) {
+    const [y, mo, d] = iso.slice(0, 10).split('-');
+    return `${y}년 ${+mo}월 ${+d}일`;
+  }
+
+  renderVals() {
+    const st = this.state;
+    const all = st.trips.map((t0, i) => {
+      const id = `${t0.여비번호}_${t0.출장자}_${i}`;
+      const e = st.edits[id] || {};
+      const t = { ...t0,
+        출장구분: e.scope !== undefined ? e.scope : t0.출장구분,
+        출장자: e.name !== undefined ? e.name : t0.출장자,
+        출장지: e.place !== undefined ? e.place : t0.출장지,
+        출장목적: e.purpose !== undefined ? e.purpose : t0.출장목적,
+        시작: e.from !== undefined ? e.from : t0.시작,
+        종료: e.to !== undefined ? e.to : t0.종료 };
+      const days = this.days(t.시작, t.종료);
+      const nights = Math.max(0, days - 1);
+      const m = this.matchFare(t.출장지);
+      const transport = e.transport !== undefined ? e.transport : '승용차';
+      const autoModes = ['승용차', '선박차량'];
+      const isAuto = autoModes.includes(transport);
+      const isRide = transport === '동승' || transport === '동반';
+      const isLocal = t.출장구분 === '관내';
+      const autoFare = (isRide || isLocal) ? 0 : (isAuto && m && typeof m.fare === 'number' ? m.fare : 0);
+      const fare = isRide ? 0 : (e.fare !== undefined ? this.num(e.fare) : autoFare);
+      const perDiem = e.perDiem !== undefined ? this.num(e.perDiem) : days * st.rateDay;
+      const meal = e.meal !== undefined ? this.num(e.meal) : days * st.rateMeal;
+      const placeFree = e.placeFree !== undefined ? e.placeFree
+        : !st.fare.some(f => f[2] === t.출장지);
+      const origin = e.origin !== undefined ? e.origin : '목포';
+      const rank = e.rank !== undefined ? e.rank : (t.여비등급 || '');
+      const lodgeCap = this.lodgeCap(t.출장지);
+      const lodgeMax = nights * lodgeCap;
+      const lodge = e.lodge !== undefined ? this.num(e.lodge) : lodgeMax;
+      const lodgeOver = Math.max(0, lodge - lodgeMax);
+      const lodgeNote = nights > 0
+        ? ` · 숙박 ${nights}박 상한 ${this.won(lodgeCap)}/박 (${this.won(lodgeMax)})${lodgeOver > 0 ? ` — 상한 초과 ${this.won(lodgeOver)}` : ''}`
+        : '';
+      const hintBase = isLocal ? '관내 출장 — 교통비 미지급 (필요하면 직접 입력)'
+        : isRide ? '동승·동반 — 운임 0원' : isAuto
+        ? (m ? (typeof m.fare === 'number'
+            ? ''
+            : `${m.name} 구간은 실비 정산 — 영수액 입력`)
+          : '')
+        : (transport ? `${transport} 운임 직접 입력` : '교통편을 먼저 고르세요');
+      const hint = hintBase;
+      return { id, t, days, nights, transport, fare, perDiem, meal, lodge, lodgeCap, lodgeMax, lodgeOver, hint, match: m, placeFree, origin, rank,
+        total: fare + perDiem + meal + lodge };
+    });
+
+    const rows = all.filter(r =>
+      !st.removed.includes(r.id) &&
+      (!st.query || r.t.출장자.includes(st.query)) &&
+      (st.selected.length === 0 || st.selected.includes(r.t.출장자)) &&
+      (!st.dFrom || r.t.종료.slice(0, 10) >= st.dFrom) &&
+      (!st.dTo || r.t.시작.slice(0, 10) <= st.dTo) &&
+      (st.scope === '전체' || (st.scope === '관내' ? r.t.출장구분 === '관내' : r.t.출장구분 !== '관내')));
+    const sum = k => rows.reduce((s, r) => s + r[k], 0);
+
+    const tripVals = rows.map(r => ({
+      no: r.t.여비번호,
+      name: r.t.출장자,
+      scope: r.t.출장구분,
+      scopeBg: r.t.출장구분 === '관내' ? '#E8F8EE' : '#FFF1F5',
+      scopeFg: r.t.출장구분 === '관내' ? '#14713C' : '#A60035',
+      period: `${r.t.시작.slice(5, 10).replace('-', '.')} ~ ${r.t.종료.slice(5, 10).replace('-', '.')} (${r.days}일)`,
+      from: r.t.시작.slice(0, 10),
+      to: r.t.종료.slice(0, 10),
+      place: r.t.출장지,
+      purpose: r.t.출장목적,
+      hint: r.hint,
+      transport: r.transport,
+      fare: r.fare.toLocaleString('ko-KR'),
+      perDiem: r.perDiem.toLocaleString('ko-KR'),
+      meal: r.meal.toLocaleString('ko-KR'),
+      lodge: r.lodge.toLocaleString('ko-KR'),
+      totalFmt: this.won(r.total),
+      onTransport: e => this.setState(s => {
+        const cur = { ...(s.edits[r.id] || {}) };
+        delete cur.fare;
+        return { edits: { ...s.edits, [r.id]: { ...cur, transport: e.target.value } } };
+      }),
+      onFare: e => this.set(r.id, 'fare', e.target.value),
+      onPerDiem: e => this.set(r.id, 'perDiem', e.target.value),
+      onMeal: e => this.set(r.id, 'meal', e.target.value),
+      onLodge: e => this.set(r.id, 'lodge', e.target.value),
+      rank: r.rank,
+      onRank: e => this.set(r.id, 'rank', e.target.value),
+      isStay: r.nights > 0,
+      stayBg: r.nights > 0 ? '#FFFBEE' : 'transparent',
+      nightsLabel: `${r.nights}박 ${r.days}일`,
+      scopeMenu: this.menu(r.id, 'scope', r.t.출장구분, ['관외', '관내']),
+      transportMenu: this.menu(r.id, 'transport', r.transport,
+        ['버스', '기차', '승용차', '동승', '항공', '선박', '선박차량', '관용차량'],
+        (id, val) => this.setState(s => {
+          const cur = { ...(s.edits[id] || {}) };
+          delete cur.fare;
+          return { openMenu: null, edits: { ...s.edits, [id]: { ...cur, transport: val } } };
+        })),
+      rankMenu: this.menu(r.id, 'rank', r.rank, ['9급', '8급', '7급', '6급', '5급', '교육장']),
+      onName: e => this.set(r.id, 'name', e.target.value),
+      onScope: e => this.set(r.id, 'scope', e.target.value),
+      onPlace: e => this.set(r.id, 'place', e.target.value),
+      placeFree: r.placeFree,
+      origin: r.origin,
+      onOrigin: e => this.set(r.id, 'origin', e.target.value),
+      placePick: !r.placeFree,
+      onPlaceList: () => this.set(r.id, 'placeFree', !r.placeFree),
+      onPlaceSelect: e => this.set(r.id, 'place', e.target.value),
+      onPurpose: e => this.set(r.id, 'purpose', e.target.value),
+      onFrom: e => this.set(r.id, 'from', e.target.value),
+      onTo: e => this.set(r.id, 'to', e.target.value),
+      onDay: e => this.setState(s => ({ edits: { ...s.edits, [r.id]: { ...(s.edits[r.id] || {}), from: e.target.value, to: e.target.value } } })),
+      onDelete: () => this.setState(s => ({ removed: [...s.removed, r.id] })),
+    }));
+
+    const pmap = new Map();
+    for (const r of rows) {
+      if (!pmap.has(r.t.출장자)) pmap.set(r.t.출장자, { name: r.t.출장자, count: 0, fare: 0, perDiem: 0, meal: 0, lodge: 0, total: 0 });
+      const p = pmap.get(r.t.출장자);
+      p.count++; p.fare += r.fare; p.perDiem += r.perDiem; p.meal += r.meal; p.lodge += r.lodge; p.total += r.total;
+    }
+    const persons = [...pmap.values()].sort((a, b) => b.total - a.total).map(p => ({
+      ...p, fareFmt: this.won(p.fare), perDiemFmt: this.won(p.perDiem),
+      mealFmt: this.won(p.meal), lodgeFmt: this.won(p.lodge), totalFmt: this.won(p.total),
+    }));
+
+    const sheets = rows.map(r => ({
+      org: st.org,
+      rank: r.rank,
+      name: r.t.출장자,
+      period: this.fmtPeriod(r.t.시작, r.t.종료),
+      place: r.t.출장지,
+      purpose: r.t.출장목적,
+      fareDate: this.fmtKDate(r.t.시작),
+      transport: r.transport || '-',
+      from: r.origin,
+      to: r.t.출장지,
+      grade: ['승용차', '선박차량'].includes(r.transport) ? '왕복' : '',
+      lodgeCapFmt: this.won(r.lodgeMax),
+      tripPeriod: this.fmtPeriod(r.t.시작, r.t.종료),
+      tripSpan: (r.days > 1 ? r.days : 1) + 1,
+      dateFirstLabel: r.days > 1 ? '1일차' : '일 시',
+      dateFirstValue: r.days > 1 ? this.fmtKDate(r.t.시작) : this.fmtPeriod(r.t.시작, r.t.종료),
+      dateRest: r.days > 1
+        ? Array.from({ length: r.days - 1 }, (_, i) => {
+            const d = new Date(r.t.시작.slice(0, 10));
+            d.setDate(d.getDate() + i + 1);
+            return { label: `${i + 2}일차`, value: this.fmtKDate(d.toISOString().slice(0, 10)) };
+          })
+        : [],
+      fareSpan: 1 + Math.max(4, r.days > 1 ? 2 : 1),
+      fareFillers: Array.from({ length: Math.max(0, 4 - (r.days > 1 ? 2 : 1)) }, () => ({ blank: '' })),
+      fareRows: (() => {
+        const half = Math.round(r.fare / 2 / 10) * 10;
+        const rem = r.match && r.transport ? r.match.name : '';
+        if (r.days > 1) return [
+          { date: this.fmtKDate(r.t.시작), transport: r.transport || '-', from: r.origin, to: r.t.출장지, grade: '편도', amount: this.won(half), remark: rem },
+          { date: this.fmtKDate(r.t.종료), transport: r.transport || '-', from: r.t.출장지, to: r.origin, grade: '편도', amount: this.won(r.fare - half), remark: rem },
+        ];
+        return [{ date: this.fmtKDate(r.t.시작), transport: r.transport || '-', from: r.origin, to: r.t.출장지,
+          grade: ['승용차', '선박차량'].includes(r.transport) ? '왕복' : '', amount: this.won(r.fare), remark: rem }];
+      })(),
+      fareFmt: this.won(r.fare),
+      fareRemark: r.match && r.transport ? r.match.name : '',
+      lodgeFmt: this.won(r.lodge),
+      lodgeExcess: r.lodgeOver > 0 ? `${this.won(r.lodgeOver)} / 상한 초과` : (r.lodge > 0 ? '' : '해당 없음'),
+      mealFmt: this.won(r.meal),
+      mealExcess: '',
+      perDiemFmt: this.won(r.perDiem),
+      totalFmt: this.won(r.total),
+      applyDate: st.applyDate,
+    }));
+
+    const dates = st.trips.flatMap(t => [t.시작, t.종료]).sort();
+    const fmtD = iso => iso ? iso.slice(0, 10).replace(/-/g, '.') : '';
+
+    return {
+      sourceLabel: st.error ? `읽기 실패 · ${st.error}`
+        : (dates.length ? `대상 ${st.trips.length}건 · ${fmtD(dates[0])} – ${fmtD(dates[dates.length - 1])}` : '엑셀 파일을 올려 주세요'),
+      emptyMsg: st.error ? `파일을 읽지 못했습니다 — ${st.error}`
+        : (st.trips.length === 0 ? '출장승인 엑셀 파일을 올리면 대상 목록이 여기에 표시됩니다.' : '검색한 이름의 출장 건이 없습니다.'),
+      fileLabel: st.error
+        ? `읽기 실패 — ${st.error}`
+        : (st.fileNames.length
+            ? `${st.fileNames.join(' + ')} (${st.trips.length}건)`
+            : '아직 올린 파일이 없습니다'),
+      tripCount: rows.length,
+      personCount: pmap.size,
+      grandTotalFmt: this.won(sum('total')),
+      perDiemFmt: this.won(sum('perDiem')),
+      mealFmt: this.won(sum('meal')),
+      fareTotalFmt: this.won(sum('fare')),
+      lodgeTotalFmt: this.won(sum('lodge')),
+      nightsLabel: `${rows.reduce((s, r) => s + r.nights, 0)}박`,
+      placeOptions: (() => {
+        const 신안 = ['지도', '증도', '압해동초', '압해중앙', '압해서초', '압해송공', '신안군청',
+          '자은', '암태', '팔금', '안좌', '비금', '도초', '하의', '신의', '장산', '임자',
+          '흑산', '홍도', '가거도'];
+        const names = [...new Set(st.fare.map(f => f[2]))];
+        const rank = n => { const i = 신안.indexOf(n); return i < 0 ? 신안.length : i; };
+        return names.sort((a, b) => rank(a) - rank(b) || a.localeCompare(b, 'ko'));
+      })(),
+      hasRemoved: st.removed.length > 0,
+      removedCount: st.removed.length,
+      onRestore: () => this.setState({ removed: [] }),
+      onAddRow: () => this.setState(s => {
+        const d = new Date().toISOString().slice(0, 10) + 'T09:00';
+        return { trips: [...s.trips, { 여비번호: `수동${s.trips.length + 1}`, 출장구분: '관외', 출장구분세부: '', 출장자: '', 시작: d, 종료: d, 출장지: '', 출장목적: '' }] };
+      }),
+      onExport: () => {
+        const head = ['구분', '출장자', '직급', '일정(시작)', '일정(종료)', '출발지', '도착지', '출장목적', '교통편', '운임', '일비', '식비', '숙박비', '합계'];
+        const body = rows.map(r => [
+          r.t.출장구분, r.t.출장자, r.rank, r.t.시작.slice(0, 10), r.t.종료.slice(0, 10),
+          r.origin, r.t.출장지, r.t.출장목적, r.transport,
+          r.fare, r.perDiem, r.meal, r.lodge, r.total,
+        ]);
+        const sums = ['합계', '', '', '', '', '', '', '', '',
+          sum('fare'), sum('perDiem'), sum('meal'), sum('lodge'), sum('fare') + sum('perDiem') + sum('meal') + sum('lodge')];
+        this.exportXlsx([head, ...body, sums], `여비정산_${new Date().toISOString().slice(0, 10)}.xlsx`);
+      },
+      blankCount: rows.filter(r => r.fare === 0).length,
+      daysLabel: `총 ${rows.reduce((s, r) => s + r.days, 0)}일`,
+      rateDay: st.rateDay.toLocaleString('ko-KR'),
+      rateMeal: st.rateMeal.toLocaleString('ko-KR'),
+      onRateDay: e => this.setState({ rateDay: this.num(e.target.value) }),
+      onRateMeal: e => this.setState({ rateMeal: this.num(e.target.value) }),
+      query: st.query,
+      onQuery: e => {
+        const v = e.target.value;
+        const hits = [...new Set(st.trips.map(t => t.출장자))].filter(nm => v && nm.includes(v));
+        this.setState({ query: v, selected: hits });
+      },
+      onFile: this.onFile,
+      viewEdit: st.view === 'edit',
+      viewForm: st.view === 'form',
+      viewList: st.view === 'list',
+      onViewEdit: () => this.setState({ view: 'edit' }),
+      onViewForm: () => this.setState({ view: 'form' }),
+      onViewList: () => this.setState({ view: 'list' }),
+      detailTitle: dates.length
+        ? `여비 정산 내역(${this.fmtDot(dates[0])}~ ${this.fmtDot(dates[dates.length - 1])})`
+        : '여비 정산 내역',
+      detailRows: rows.map((r, i) => ({
+        idx: i + 1,
+        name: r.t.출장자,
+        from: this.fmtMD(r.t.시작),
+        to: this.fmtMD(r.t.종료),
+        place: r.t.출장지,
+        perDiem: r.perDiem ? r.perDiem.toLocaleString('ko-KR') : '',
+        meal: r.meal ? r.meal.toLocaleString('ko-KR') : '',
+        fare: r.fare ? r.fare.toLocaleString('ko-KR') : '',
+        lodge: r.lodge ? r.lodge.toLocaleString('ko-KR') : '',
+        sub: r.total.toLocaleString('ko-KR'),
+        note: r.transport && r.transport !== '승용차' ? r.transport : '',
+      })),
+      detailTotal: sum('total').toLocaleString('ko-KR'),
+      org: st.org,
+      onOrg: e => this.setState({ org: e.target.value }),
+      applyDate: st.applyDate,
+      onApplyDate: e => this.setState({ applyDate: e.target.value }),
+      dFrom: st.dFrom, dTo: st.dTo,
+      onDFrom: e => this.setState({ dFrom: e.target.value }),
+      onDTo: e => this.setState({ dTo: e.target.value }),
+      onDReset: () => this.setState({ dFrom: '', dTo: '' }),
+      onClearAll: () => this.setState({
+        trips: [], edits: {}, removed: [], query: '', scope: '전체', selected: [], dFrom: '', dTo: '', error: '',
+        fileNames: [], rateDay: 25000, rateMeal: 25000,
+      }),
+      onPrint: () => window.print(),
+      soundLabel: st.sound ? '효과음 켜짐' : '효과음 꺼짐',
+      onToggleSound: () => this.setState(s => ({ sound: !s.sound }), () => this.playTick('soft')),
+      trips: tripVals,
+      persons,
+      sheets,
+      isEmpty: rows.length === 0,
+      scopeAll: st.scope === '전체', scopeIn: st.scope === '관내', scopeOut: st.scope === '관외',
+      onScopeAll: () => this.setState({ scope: '전체' }),
+      onScopeIn: () => this.setState({ scope: '관내' }),
+      onScopeOut: () => this.setState({ scope: '관외' }),
+      scopeCounts: `관내 ${all.filter(r => r.t.출장구분 === '관내').length} · 관외 ${all.filter(r => r.t.출장구분 !== '관내').length}`,
+      hasPeople: st.trips.length > 0,
+      allActive: st.selected.length === 0,
+      allBg: st.selected.length === 0 ? 'var(--color-accent)' : '#FFFFFF',
+      allFg: st.selected.length === 0 ? '#FFFFFF' : '#4A4A52',
+      onSelectAll: () => this.setState({ selected: [] }),
+      pickLabel: st.selected.length === 0
+        ? `전체 ${new Set(all.map(r => r.t.출장자)).size}명`
+        : `선택 ${st.selected.length}명`,
+      people: [...new Set(all.map(r => r.t.출장자))].sort((a, b) => a.localeCompare(b, 'ko')).map(nm => {
+        const on = st.selected.includes(nm);
+        return {
+          name: nm,
+          count: all.filter(r => r.t.출장자 === nm).length,
+          bg: on ? 'var(--color-accent)' : '#FFFFFF',
+          fg: on ? '#FFFFFF' : '#4A4A52',
+          onPick: () => this.setState(s => ({
+            selected: s.selected.includes(nm) ? s.selected.filter(x => x !== nm) : [...s.selected, nm],
+          })),
+        };
+      }),
+    };
+  }
+}
+
+</script>
+</body>
+</html>
