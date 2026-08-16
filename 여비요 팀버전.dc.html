@@ -81,7 +81,8 @@
   @page { size: A4; margin: 12mm; }
   @media print {
     [data-noprint] { display: none !important; }
-    body { background: #fff; }
+    html, body { background: #fff !important; }
+    .sheet, .sheet * { background: #fff !important; background-image: none !important; box-shadow: none !important; }
     .sheet { box-shadow: none !important; margin: 0 !important; width: auto !important; min-height: 0 !important; padding: 0 !important; page-break-after: always; }
     .sheet:last-of-type { page-break-after: auto; }
     .sheet-wide { width: 1123px !important; transform: scale(0.6); transform-origin: top left; }

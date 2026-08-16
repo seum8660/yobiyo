@@ -55,7 +55,8 @@
   @page { size: A4; margin: 12mm; }
   @media print {
     [data-noprint] { display: none !important; }
-    body { background: #fff; }
+    html, body { background: #fff !important; }
+    .sheet, .sheet * { background: #fff !important; background-image: none !important; box-shadow: none !important; }
     .sheet { box-shadow: none !important; margin: 0 !important; width: auto !important; min-height: 0 !important; padding: 0 !important; page-break-after: always; }
     .sheet:last-of-type { page-break-after: auto; }
   }
@@ -108,6 +109,44 @@
               <label class="fld"><span style="text-align:left">직급(직위)</span><input class="input" value="{{ rank }}" onChange="{{ onRank }}"></label>
               <label class="fld"><span style="text-align:left">성명</span><input class="input" value="{{ name }}" onChange="{{ onName }}"></label>
             </div>
+            <div style="display:flex;align-items:center;gap:16px;margin-top:18px;padding-top:18px;border-top:1px solid #F0F1F3">
+              <div style="flex:none;display:flex;align-items:center;justify-content:center;width:150px;height:66px;border:1px solid #DEE0E4;border-radius:12px;background:#FAFAFB;overflow:hidden">
+                <sc-if value="{{ hasSign }}" hint-placeholder-val="{{ false }}">
+                  <img src="{{ signUrl }}" alt="서명" style="max-width:134px;max-height:54px;object-fit:contain">
+                </sc-if>
+                <sc-if value="{{ noSign }}" hint-placeholder-val="{{ true }}">
+                  <span style="font-size:12px;font-weight:700;color:#B5B5BB">서명 없음</span>
+                </sc-if>
+              </div>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:13px;font-weight:800;color:#32323A">개인 서명 이미지</div>
+                <div style="font-size:12.5px;font-weight:600;color:#8A8A90;line-height:1.6;margin-top:3px;text-wrap:pretty">{{ signNote }}</div>
+                <div style="display:flex;gap:8px;margin-top:10px">
+                  <label class="btn btn-secondary" style="cursor:pointer">{{ signBtnLabel }}
+                    <input type="file" accept="image/*" onChange="{{ onSignFile }}" style="display:none">
+                  </label>
+                  <button type="button" class="btn btn-secondary" onClick="{{ onToggleDraw }}">{{ drawBtnLabel }}</button>
+                  <sc-if value="{{ hasSign }}" hint-placeholder-val="{{ false }}">
+                    <button type="button" class="btn btn-ghost" onClick="{{ onSignClear }}">삭제</button>
+                  </sc-if>
+                </div>
+              </div>
+            </div>
+            <sc-if value="{{ drawOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:16px;padding:16px;border:1px solid #DEE0E4;border-radius:14px;background:#FAFAFB">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                  <span style="font-size:13px;font-weight:800;color:#32323A">마우스로 서명하기</span>
+                  <span style="font-size:12.5px;font-weight:600;color:#8A8A90">아래 칸 안에서 드래그하세요</span>
+                </div>
+                <canvas ref="{{ signCanvasRef }}" width="1040" height="320"
+                  onPointerDown="{{ onPadDown }}" onPointerMove="{{ onPadMove }}" onPointerUp="{{ onPadUp }}" onPointerLeave="{{ onPadUp }}"
+                  style="display:block;width:100%;height:160px;border:1px dashed #B4B9C1;border-radius:10px;background:#FFFFFF;cursor:crosshair;touch-action:none"></canvas>
+                <div style="display:flex;gap:8px;margin-top:12px">
+                  <button type="button" class="btn btn-primary" onClick="{{ onPadSave }}">서명 저장</button>
+                  <button type="button" class="btn btn-ghost" onClick="{{ onPadClear }}">다시 그리기</button>
+                </div>
+              </div>
+            </sc-if>
           </div>
 
           <div class="blueprint" style="padding:26px">
@@ -300,7 +339,7 @@
               <tbody>
                 <tr style="height:34px">
                   <th style="width:96px">소 속</th>
-                  <td style="width:214px">{{ s.org }}</td>
+                  <td style="width:214px;white-space:nowrap;overflow:hidden;font-size:10px;letter-spacing:-0.06em;padding:6px 4px">{{ s.org }}</td>
                   <th style="width:76px">직 급<br>(직위)</th>
                   <td style="width:104px;text-align:center">{{ s.rank }}</td>
                   <th style="width:76px">성 명</th>
@@ -366,6 +405,9 @@
             <div style="display:flex;align-items:baseline;justify-content:flex-end;gap:22px;font-size:13px;padding-right:8px;margin-bottom:38px">
               <span style="letter-spacing:0.3em">신 청 인</span>
               <span style="letter-spacing:0.3em">성 명 {{ s.name }}</span>
+              <sc-if value="{{ s.hasSign }}" hint-placeholder-val="{{ false }}">
+                <img src="{{ s.signUrl }}" alt="서명" style="height:38px;max-width:120px;object-fit:contain;margin-bottom:-10px">
+              </sc-if>
               <span style="font-size:10px;color:#6b6b70">(서명 또는 인)</span>
             </div>
             <div style="font-size:14.5px;font-weight:700;margin:auto 0 12px">{{ s.officeHead }} <span style="font-size:12px;font-weight:400">귀하</span></div>
@@ -417,7 +459,7 @@ class Component extends DCLogic {
     scope: '관외', from: '', to: '',
     origin: '목포', dest: '', transport: '승용차', purpose: '',
     fareInput: '', lodgeInput: '',
-    applyDate: '',
+    applyDate: '', signUrl: '', drawOpen: false,
     fare: [], aliases: [],
     recent: [], mates: [], mateName: '', mateRank: '', legs: [],
     receipts: [], dragFrom: null, dragOver: null,
@@ -429,6 +471,9 @@ class Component extends DCLogic {
     let me = {}, recent = [];
     try { me = JSON.parse(localStorage.getItem('yeobiyo-personal-me') || '{}'); } catch (e) {}
     try { recent = JSON.parse(localStorage.getItem('yeobiyo-personal-recent') || '[]'); } catch (e) {}
+    let signUrl = '';
+    try { signUrl = localStorage.getItem('yeobiyo-personal-sign') || ''; } catch (e) {}
+    if (signUrl) this.setState({ signUrl });
     this.setState({
       from: iso(today), to: iso(today),
       applyDate: `${today.getFullYear()}년 ${today.getMonth() + 1}월 ${today.getDate()}일`,
@@ -601,6 +646,72 @@ class Component extends DCLogic {
     files.forEach(f => this.addReceipt(f));
   };
 
+  padContext() {
+    const ctx = this.pad.getContext('2d');
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = '#101010';
+    return ctx;
+  }
+
+  padPoint(e) {
+    if (!this.pad) return null;
+    const r = this.pad.getBoundingClientRect();
+    return {
+      x: (e.clientX - r.left) * (this.pad.width / r.width),
+      y: (e.clientY - r.top) * (this.pad.height / r.height),
+    };
+  }
+
+  padTrimmed() {
+    const cv = this.pad, w = cv.width, h = cv.height;
+    const d = cv.getContext('2d').getImageData(0, 0, w, h).data;
+    let x0 = w, y0 = h, x1 = -1, y1 = -1;
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        if (d[(y * w + x) * 4 + 3] > 8) {
+          if (x < x0) x0 = x; if (x > x1) x1 = x;
+          if (y < y0) y0 = y; if (y > y1) y1 = y;
+        }
+      }
+    }
+    if (x1 < 0) return cv.toDataURL('image/png');
+    const pad = 8;
+    x0 = Math.max(0, x0 - pad); y0 = Math.max(0, y0 - pad);
+    x1 = Math.min(w - 1, x1 + pad); y1 = Math.min(h - 1, y1 + pad);
+    const out = document.createElement('canvas');
+    out.width = x1 - x0 + 1; out.height = y1 - y0 + 1;
+    out.getContext('2d').drawImage(cv, x0, y0, out.width, out.height, 0, 0, out.width, out.height);
+    return out.toDataURL('image/png');
+  }
+
+  loadSign(file) {
+    const rd = new FileReader();
+    rd.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const max = 260;
+        const sc = Math.min(1, max / img.width, 110 / img.height);
+        const cv = document.createElement('canvas');
+        cv.width = Math.max(1, Math.round(img.width * sc));
+        cv.height = Math.max(1, Math.round(img.height * sc));
+        cv.getContext('2d').drawImage(img, 0, 0, cv.width, cv.height);
+        let url = cv.toDataURL('image/png');
+        if (url.length > 700000) url = String(rd.result);
+        try { localStorage.setItem('yeobiyo-personal-sign', url); } catch (e) {}
+        this.setState({ signUrl: url });
+      };
+      img.onerror = () => {
+        const url = String(rd.result);
+        try { localStorage.setItem('yeobiyo-personal-sign', url); } catch (e) {}
+        this.setState({ signUrl: url });
+      };
+      img.src = String(rd.result);
+    };
+    rd.readAsDataURL(file);
+  }
+
   renderVals() {
     const st = this.state;
     const days = this.days(st.from, st.to);
@@ -671,6 +782,7 @@ class Component extends DCLogic {
           ? `${this.fmtKDate(st.from)} － ${this.fmtKDate(st.to)}`
           : this.fmtKDate(st.from),
         attachLine, applyDate: st.applyDate, officeHead,
+        signUrl: st.signUrl || '', hasSign: !!st.signUrl,
       };
     };
 
@@ -698,6 +810,52 @@ class Component extends DCLogic {
       org: st.org, rank: st.rank, name: st.name, origin: st.origin, dest: st.dest,
       scope: st.scope, from: st.from, to: st.to, transport: st.transport,
       purpose: st.purpose, applyDate: st.applyDate,
+      signUrl: st.signUrl || '', hasSign: !!st.signUrl, noSign: !st.signUrl,
+      signNote: st.signUrl ? '이 기기에 저장되어 다음에도 자동으로 들어갑니다.' : 'PNG 투명배경 권장. 한 번 올리면 이 기기에 저장됩니다.',
+      signBtnLabel: st.signUrl ? '다시 올리기' : '서명 이미지 올리기',
+      onSignFile: e => {
+        const f = e.target.files && e.target.files[0];
+        e.target.value = '';
+        if (f) this.loadSign(f);
+      },
+      drawOpen: !!st.drawOpen,
+      drawBtnLabel: st.drawOpen ? '그리기 닫기' : '마우스로 그리기',
+      onToggleDraw: () => this.setState(s => ({ drawOpen: !s.drawOpen })),
+      signCanvasRef: el => { this.pad = el; if (el) this.padCtx = null; },
+      onPadDown: e => {
+        const p = this.padPoint(e);
+        if (!p) return;
+        this.padDrawing = true;
+        this.padDrew = true;
+        e.target.setPointerCapture && e.target.setPointerCapture(e.pointerId);
+        const ctx = this.padContext();
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+      },
+      onPadMove: e => {
+        if (!this.padDrawing) return;
+        const p = this.padPoint(e);
+        if (!p) return;
+        const ctx = this.padContext();
+        ctx.lineTo(p.x, p.y);
+        ctx.stroke();
+      },
+      onPadUp: () => { this.padDrawing = false; },
+      onPadClear: () => {
+        this.padDrawing = false;
+        this.padDrew = false;
+        if (this.pad) this.pad.getContext('2d').clearRect(0, 0, this.pad.width, this.pad.height);
+      },
+      onPadSave: () => {
+        if (!this.pad || !this.padDrew) return;
+        const url = this.padTrimmed();
+        try { localStorage.setItem('yeobiyo-personal-sign', url); } catch (err) {}
+        this.setState({ signUrl: url, drawOpen: false });
+      },
+      onSignClear: () => {
+        try { localStorage.removeItem('yeobiyo-personal-sign'); } catch (err) {}
+        this.setState({ signUrl: '' });
+      },
       lodgeInput: st.lodgeInput,
       mateName: st.mateName, mateRank: st.mateRank,
       onOrg: this.set('org'), onRank: this.set('rank'), onName: this.set('name'),
